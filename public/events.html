@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#059AD2">
+  <title>Events</title>
+  <link rel="icon" href="gceblogo.png" type="image/x-icon">
+  <link rel="stylesheet" href="events_style.css">
+  <style>
+    /* Customizing the appearance of scrollbars in WebKit browsers (e.g., Safari) */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: black;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #059AD2;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+    }
+
+    header, footer {
+        position: relative;
+        background: url('1.jpg') no-repeat center center / cover;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    header {
+        padding: 0 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1;
+    }
+
+    header .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    header nav {
+        display: flex;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+    }
+
+    header nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1em;
+        transition: color 0.3s;
+    }
+
+    header nav a:hover {
+        color: #000000;
+    }
+
+    .hamburger {
+        display: none;  /* Hide the hamburger by default */
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 3;
+        position: relative;
+        padding: 10px;
+    }
+
+    .hamburger div {
+        width: 25px;
+        height: 3px;
+        background: white;
+        margin: 4px 0;
+        transition: all 0.3s;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+
+    .close-icon {
+        display: none;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        z-index: 3;
+        font-size: 2em;
+        color: white;
+    }
+
+    /*.side-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background: url('Sky.jpg') no-repeat center center / cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        z-index: 2;
+        transition: right 0.3s ease-in-out;
+        overflow: hidden;
+    }*/
+
+    .side-menu a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2em;
+    }
+
+    .side-menu a:hover {
+        color: #f0a500;
+    }
+
+    .side-menu.open {
+        right: 0;
+    }
+
+
+    footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    footer p {
+        margin: 5px 0;
+        z-index: 10;
+        font-size: 0.9em;
+    }
+
+    footer a {
+        color: #059AD2;
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        header nav {
+            display: none;
+        }
+
+        .hamburger {
+            display: flex; /* Show hamburger only on mobile view */
+        }
+    }
+
+    @media (min-width: 769px) {
+        .hamburger {
+            display: none; /* Hide hamburger on desktop and larger screens */
+        }
+
+        header nav {
+            display: flex; /* Show normal navigation on desktop */
+        }
+    }
+
+    @media (min-width: 769px) {
+     .side-menu {
+         display: none !important;  /* Hide side menu when header content is visible */
+     }
+
+     .close-icon {
+         display: none !important;  /* Hide side menu when header content is visible */
+     }
+
+    #hamburger {
+         display: none !important;  /* Hide hamburger icon on larger screens */
+     }
+  }
+
+@media (max-width: 768px) {
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background: url('1.jpg') no-repeat center center / cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 2;
+    transition: right 0.3s ease-in-out;
+    overflow: hidden;
+}
+.side-menu.open {
+    right: 0;
+}
+
+#hamburger {
+    display: block; /* Show hamburger only in mobile view */
+}
+}
+
+    
+</style>
+</head>
+<body>
+   <!-- Header
+   <img src="bg_img.jpeg" class="background-clip" >-->
+   <header>
+    <div class="logo">Phantasm'25</div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="close-icon" id="closeIcon" onclick="toggleMenu()">&#x2715;</div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#events">Events</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#contact">Contact</a>
+        <a href="#login">Login</a>
+    </nav>
+    <div class="side-menu" id="sideMenu">
+        <!-- Example folder-based links -->
+        <a href="pages/about.html">About</a>
+        <a href="pages/events.html">Events</a>
+        <a href="pages/schedule.html">Schedule</a>
+        <a href="pages/contact.html">Contact</a>
+        <a href="pages/login.html">Login</a>
+    </div>
+</header>
+
+  <h3>TECHNICAL EVENTS</h3>
+  <div class="scroll-container">
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">Techtalk 2.0</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">CodeStorm</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">Query Quest</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">UI-UX</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+  <h3>NON-TECHNICAL EVENTS</h3>
+  <div class="scroll-container">
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">Fire fire or PUBG</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">IPL aution</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">Mystic Adventure</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="card">
+          <div class="content-box">
+              <span class="card-title">Triple showdown</span>
+              <p class="card-content">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+              </p>
+              <span class="see-more"><a href="www.google.com">See More</a></span>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div><p> </p></div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 CSEA. All rights reserved.</p>
+    <p>Follow us on</p>
+    <p>
+        <a href="#">Instagram</a>, <a href="#">Facebook</a>, and <a href="#">Twitter</a>.
+    </p>
+</footer>
+
+<script>
+  // Function to toggle the side menu
+  function toggleMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      const hamburger = document.getElementById('hamburger');
+      const closeIcon = document.getElementById('closeIcon');
+
+      // Toggle side menu visibility
+      sideMenu.classList.toggle('open');
+
+      // Toggle visibility of hamburger and close icon
+      if (sideMenu.classList.contains('open')) {
+          hamburger.classList.add('hidden');
+          closeIcon.style.display = 'block';
+      } else {
+          hamburger.classList.remove('hidden');
+          closeIcon.style.display = 'none';
+      }
+  }
+
+</script>
+
+</body>
+</html>
