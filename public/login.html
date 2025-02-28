@@ -104,6 +104,49 @@
                closeIcon.style.display = 'none';
            }
        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+
+    if (!loginForm) {
+        console.error("Form not found!");
+        return;
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent default submission
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("pass").value.trim(); // Match input ID
+
+        if (!username || !password) {
+            alert("Please fill in both fields.");
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }), // Use correct variable names
+                credentials: "include"
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert("Login successful! Redirecting...");
+                window.location.href = result.role === "admin" ? "/adminprofile.html" : "/profile.html";
+            } else {
+                alert(result.error || "Login failed. Please check your credentials.");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            alert("Something went wrong, please try again.");
+        }
+    });
+});
+
     </script>
 </body>
 </html>
